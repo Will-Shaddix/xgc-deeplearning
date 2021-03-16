@@ -15,6 +15,7 @@ import math
 import itertools
 import sys
 import logging
+import adios2 as ad2
 
 import torchvision.transforms as transforms
 from torchvision.utils import save_image, make_grid
@@ -104,12 +105,59 @@ Tensor = torch.cuda.FloatTensor if cuda else torch.Tensor
 mean = 0.121008*2
 std = 0.217191
 
-dataloader = DataLoader(
-    ImageDataset("%s" % opt.dataset_name, hr_shape=hr_shape, mean=mean, std=std),
-    batch_size=opt.batch_size,
-    shuffle=True,
-    num_workers=opt.n_cpu,
-)
+
+offset = 159065
+length = opt.num_images
+#if(args.dataset == "")
+with ad2.open('nstx_data_ornl_demo_v2.bp','r') as f:
+    gpiData = f.read('gpiData')[offset:offset+length:1,:,:]
+
+## Change dimension order
+X = np.moveaxis(gpiData, 2, 1)
+#X = np.einsum('kji->kij', gpiData)
+X = X[:,:,::-1]
+#X = preprocess(gpiData)
+#X = gpiData.astype('float64')
+print (gpiData.shape, X.shape)
+
+zd = X.astype('float32')#changing gpidata to X to make reconstructed image vertical
+zlb = np.array(range(len(zd)), dtype=np.int32)
+
+#zlb = np.concatenate(li)
+zmu = np.mean(zd, axis=(1,2))
+zsig = np.std(zd, axis=(1,2))
+zmin = np.min(zd, axis=(1,2))
+zmax = np.max(zd, axis=(1,2))
+zd = (zd - zmin[:,np.newaxis,np.newaxis])/(zmax-zmin)[:,np.newaxis,np.newaxis]
+print (zd.shape, zlb.shape, np.min(zd), np.max(zd))
+
+lx = list()
+ly = list()
+embedList = list()
+for i in range(len(zd)):
+    lx.append(zd[i,:])
+    ly.append(zlb[i])
+
+training_data = torch.utils.data.TensorDataset(torch.Tensor(lx), torch.Tensor(ly))
+
+dataloader = torch.utils.data.DataLoader(training_data, batch_size=opt.batch_size, shuffle=True, pin_memory=True)
+
+
+
+# dataloader = DataLoader(
+#     ImageDataset("%s" % opt.dataset_name, hr_shape=hr_shape, mean=mean, std=std),
+#     batch_size=opt.batch_size,
+#     shuffle=True,
+#     num_workers=opt.n_cpu,
+# )
+
+
+
+
+
+
+
+
 
 # ----------
 #  Training
