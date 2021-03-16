@@ -143,7 +143,7 @@ training_data = torch.utils.data.TensorDataset(torch.Tensor(lx), torch.Tensor(ly
 dataloader = torch.utils.data.DataLoader(training_data, batch_size=opt.batch_size, shuffle=True, pin_memory=True)
 
 
-
+#commented out dataloader
 # dataloader = DataLoader(
 #     ImageDataset("%s" % opt.dataset_name, hr_shape=hr_shape, mean=mean, std=std),
 #     batch_size=opt.batch_size,
