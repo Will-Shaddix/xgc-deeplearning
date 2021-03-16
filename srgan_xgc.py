@@ -107,7 +107,7 @@ std = 0.217191
 
 
 offset = 159065
-length = opt.num_images
+length = 16000
 #if(args.dataset == "")
 with ad2.open('nstx_data_ornl_demo_v2.bp','r') as f:
     gpiData = f.read('gpiData')[offset:offset+length:1,:,:]
