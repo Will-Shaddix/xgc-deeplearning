@@ -167,8 +167,8 @@ for epoch in range(opt.epoch, opt.n_epochs):
 
         # Configure model input
         # imgs_lr = Variable(imgs["lr"].type(Tensor))
-        imgs_hr = Variable(imgs[:,:,:].type(Tensor))
-        imgs_lr = Variable(imgs[:,::2,::2].type(Tensor))
+        imgs_hr = Variable(imgs)
+        imgs_lr = Variable(imgs[:,::2,::2])
 
         n = (64-imgs_lr.shape[2])//2
         imgs_lr = F.pad(imgs_lr, (n,n,n,n), "constant", -mean/std)
