@@ -133,7 +133,6 @@ print (zd.shape, zlb.shape, np.min(zd), np.max(zd))
 
 lx = list()
 ly = list()
-embedList = list()
 for i in range(len(zd)):
     lx.append(zd[i,:])
     ly.append(zlb[i])
