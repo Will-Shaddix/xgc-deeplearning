@@ -166,8 +166,9 @@ for epoch in range(opt.epoch, opt.n_epochs):
     for i, imgs in enumerate(dataloader):
 
         # Configure model input
-        imgs_lr = Variable(imgs["lr"].type(Tensor))
-        imgs_hr = Variable(imgs["hr"].type(Tensor))
+        # imgs_lr = Variable(imgs["lr"].type(Tensor))
+        imgs_hr = Variable(imgs.type(Tensor))
+        imgs_lr = Variable(imgs[:,::2,::2].type(Tensor))
 
         n = (64-imgs_lr.shape[2])//2
         imgs_lr = F.pad(imgs_lr, (n,n,n,n), "constant", -mean/std)
