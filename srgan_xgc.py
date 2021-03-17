@@ -167,7 +167,9 @@ for epoch in range(opt.epoch, opt.n_epochs):
 
         # Configure model input
         # imgs_lr = Variable(imgs["lr"].type(Tensor))
-        print("imgs:", imgs)
+        print("type imgs:", type(imgs))
+        print("length of imgs:", len(imgs))
+        
         imgs_hr = Variable(imgs.type(Tensor))
         imgs_lr = Variable(imgs[:,::2,::2].type(Tensor))
 
