@@ -173,7 +173,8 @@ for epoch in range(opt.epoch, opt.n_epochs):
         print("imgs[1]:", imgs[1])
         print("type(imgs[0]):", type(imgs[0]))
         print("shape(imgs[0]):", imgs[0].shape)
-
+        imgs[0] = imgs[0].view(args.batch_size, -1, 80, 64)
+        print("shape(imgs[0]) after view:", imgs[0].shape)
         
         imgs_hr = Variable(imgs[0])
         imgs_lr = Variable(imgs[0][:,::2,::2])
