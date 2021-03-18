@@ -170,6 +170,7 @@ for epoch in range(opt.epoch, opt.n_epochs):
         print("type imgs:", type(imgs))
         print("length of imgs:", len(imgs))
         print("imgs[0]:", imgs[0])
+        print("imgs[1]:", imgs[1])
         print("type(imgs[0]):", type(imgs[0]))
         
         imgs_hr = Variable(imgs.type(Tensor))
