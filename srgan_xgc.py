@@ -178,6 +178,8 @@ for epoch in range(opt.epoch, opt.n_epochs):
         
         imgs_hr = Variable(imgs[0])
         imgs_lr = Variable(imgs[0][:,::2,::2])
+        print("type(imgs_lr):", type(imgs_lr))
+        print("type(imgs_hr):", type(imgs_hr))
 
         n = (64-imgs_lr.shape[2])//2
         imgs_lr = F.pad(imgs_lr, (n,n,n,n), "constant", -mean/std)
