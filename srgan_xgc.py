@@ -199,6 +199,10 @@ for epoch in range(opt.epoch, opt.n_epochs):
         optimizer_G.zero_grad()
 
         # Generate a high resolution image from low resolution input
+        print("type(imgs_lr):", type(imgs_lr))
+        imgs_lr = imgs_lr.cuda()
+        print("after cuda type(imgs_lr):", type(imgs_lr))
+
         gen_hr = generator(imgs_lr)
 
         # Adversarial loss
