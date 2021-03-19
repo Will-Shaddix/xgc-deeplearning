@@ -209,6 +209,7 @@ for epoch in range(opt.epoch, opt.n_epochs):
         # valid.shape: torch.Size([16, 1, 16, 16])
         # fake.shape: torch.Size([16, 1, 16, 16])
         # discriminator(gen_hr).shape: torch.Size([16, 1, 16, 16])
+        print("discriminator(gen_hr).shape:", discriminator(gen_hr).shape)
         loss_GAN = criterion_GAN(discriminator(gen_hr), valid)
 
         # Content loss
